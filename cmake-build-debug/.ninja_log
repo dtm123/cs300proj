@@ -1,0 +1,8 @@
+# ninja log v6
+73	1456	7546257118675348	CMakeFiles/ClimateChangeAnalysis.dir/ImportData.cpp.obj	fea9c0a372191f45
+11	1172	7546257649806065	CMakeFiles/ClimateChangeAnalysis.dir/Analysis.cpp.obj	200afb5fd5375871
+64	1523	7546257118585570	CMakeFiles/ClimateChangeAnalysis.dir/main.cpp.obj	cfbf32e8e39ff2ab
+1173	1484	7546257661423140	ClimateChangeAnalysis.exe	666ed44ab7f4ef0e
+38	131	7546299886080778	CMakeFiles/ClimateChangeAnalysis.dir/Menu.cpp.obj	222ec123af9184ca
+32	825	7546299886010952	CMakeFiles/ClimateChangeAnalysis.dir/main.cpp.obj	cfbf32e8e39ff2ab
+825	1278	7546299893940114	ClimateChangeAnalysis.exe	3c698962d4d96255

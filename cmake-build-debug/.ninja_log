@@ -1,8 +1,19 @@
 # ninja log v6
-73	1456	7546257118675348	CMakeFiles/ClimateChangeAnalysis.dir/ImportData.cpp.obj	fea9c0a372191f45
-11	1172	7546257649806065	CMakeFiles/ClimateChangeAnalysis.dir/Analysis.cpp.obj	200afb5fd5375871
-64	1523	7546257118585570	CMakeFiles/ClimateChangeAnalysis.dir/main.cpp.obj	cfbf32e8e39ff2ab
-1173	1484	7546257661423140	ClimateChangeAnalysis.exe	666ed44ab7f4ef0e
-38	131	7546299886080778	CMakeFiles/ClimateChangeAnalysis.dir/Menu.cpp.obj	222ec123af9184ca
-32	825	7546299886010952	CMakeFiles/ClimateChangeAnalysis.dir/main.cpp.obj	cfbf32e8e39ff2ab
-825	1278	7546299893940114	ClimateChangeAnalysis.exe	3c698962d4d96255
+12	1104	7546336428164612	CMakeFiles/ClimateChangeAnalysis.dir/Analysis.cpp.obj	200afb5fd5375871
+22	1309	7546334418495659	CMakeFiles/ClimateChangeAnalysis.dir/ImportData.cpp.obj	fea9c0a372191f45
+23	917	7546327339053125	CMakeFiles/ClimateChangeAnalysis.dir/Menu.cpp.obj	222ec123af9184ca
+23	907	7546322667047405	CMakeFiles/ClimateChangeAnalysis.dir/main.cpp.obj	cfbf32e8e39ff2ab
+918	1091	7546327348002184	ClimateChangeAnalysis.exe	3c698962d4d96255
+5	453	7546337244253563	build.ninja	81d6ba76299fd0e6
+11	1069	7546337834789387	CMakeFiles/ClimateChangeAnalysis.dir/Menu.cpp.obj	222ec123af9184ca
+1070	1253	7546337845377309	ClimateChangeAnalysis.exe	d2fe5a073d58c34
+10	1256	7546339598559494	CMakeFiles/ClimateChangeAnalysis.dir/Analysis.cpp.obj	200afb5fd5375871
+18	1286	7546339598639282	CMakeFiles/ClimateChangeAnalysis.dir/Menu.cpp.obj	222ec123af9184ca
+11	983	7546340496837077	CMakeFiles/ClimateChangeAnalysis.dir/Analysis.cpp.obj	200afb5fd5375871
+14	1031	7546341525989199	CMakeFiles/ClimateChangeAnalysis.dir/Analysis.cpp.obj	200afb5fd5375871
+1032	1218	7546341536165732	ClimateChangeAnalysis.exe	d2fe5a073d58c34
+12	1082	7546343384756473	CMakeFiles/ClimateChangeAnalysis.dir/Analysis.cpp.obj	200afb5fd5375871
+1083	1262	7546343395464963	ClimateChangeAnalysis.exe	d2fe5a073d58c34
+12	1111	7546346001263320	CMakeFiles/ClimateChangeAnalysis.dir/Analysis.cpp.obj	200afb5fd5375871
+19	1173	7546346001336009	CMakeFiles/ClimateChangeAnalysis.dir/Menu.cpp.obj	222ec123af9184ca
+1173	1356	7546346012878156	ClimateChangeAnalysis.exe	d2fe5a073d58c34

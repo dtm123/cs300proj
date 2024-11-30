@@ -4,21 +4,19 @@
 #define ANALYSIS_H
 
 #include <vector>
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <string>
 
 class Analysis {
 public:
-    void importFile(const std::string& filename);
-    // std::vector<std::string> analysis;
+    void readTempFile(const std::string& filename);
+    void readCO2File(const std::string& filename);
+    int ppmCO2[64];
+    double temp[64];
 
-    // filename = "co2_annmean_mlo.csv";
 private:
 
-    //use arrays
-    //create array for Global Temp c°
-    //create array for CO2 PPM
 };
 
 

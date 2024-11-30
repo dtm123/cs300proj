@@ -5,7 +5,7 @@
 
 
 class Menu {
-
+public:
     void displayMenu();
     //create new data analysis
     //save current analysis

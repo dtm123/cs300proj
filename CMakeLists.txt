@@ -5,8 +5,6 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_executable(ClimateChangeAnalysis main.cpp
         Menu.h
-        ImportData.cpp
-        ImportData.h
         Analysis.cpp
         Analysis.h
         Menu.cpp)

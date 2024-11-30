@@ -55,12 +55,6 @@ build CMakeFiles/ClimateChangeAnalysis.dir/main.cpp.obj: CXX_COMPILER__ClimateCh
   OBJECT_DIR = CMakeFiles\ClimateChangeAnalysis.dir
   OBJECT_FILE_DIR = CMakeFiles\ClimateChangeAnalysis.dir
 
-build CMakeFiles/ClimateChangeAnalysis.dir/ImportData.cpp.obj: CXX_COMPILER__ClimateChangeAnalysis_unscanned_Debug D$:/ClassWork/CS300/ClimateChangeAnalysis/ImportData.cpp || cmake_object_order_depends_target_ClimateChangeAnalysis
-  DEP_FILE = CMakeFiles\ClimateChangeAnalysis.dir\ImportData.cpp.obj.d
-  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
-  OBJECT_DIR = CMakeFiles\ClimateChangeAnalysis.dir
-  OBJECT_FILE_DIR = CMakeFiles\ClimateChangeAnalysis.dir
-
 build CMakeFiles/ClimateChangeAnalysis.dir/Analysis.cpp.obj: CXX_COMPILER__ClimateChangeAnalysis_unscanned_Debug D$:/ClassWork/CS300/ClimateChangeAnalysis/Analysis.cpp || cmake_object_order_depends_target_ClimateChangeAnalysis
   DEP_FILE = CMakeFiles\ClimateChangeAnalysis.dir\Analysis.cpp.obj.d
   FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
@@ -81,7 +75,7 @@ build CMakeFiles/ClimateChangeAnalysis.dir/Menu.cpp.obj: CXX_COMPILER__ClimateCh
 #############################################
 # Link the executable ClimateChangeAnalysis.exe
 
-build ClimateChangeAnalysis.exe: CXX_EXECUTABLE_LINKER__ClimateChangeAnalysis_Debug CMakeFiles/ClimateChangeAnalysis.dir/main.cpp.obj CMakeFiles/ClimateChangeAnalysis.dir/ImportData.cpp.obj CMakeFiles/ClimateChangeAnalysis.dir/Analysis.cpp.obj CMakeFiles/ClimateChangeAnalysis.dir/Menu.cpp.obj
+build ClimateChangeAnalysis.exe: CXX_EXECUTABLE_LINKER__ClimateChangeAnalysis_Debug CMakeFiles/ClimateChangeAnalysis.dir/main.cpp.obj CMakeFiles/ClimateChangeAnalysis.dir/Analysis.cpp.obj CMakeFiles/ClimateChangeAnalysis.dir/Menu.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\ClimateChangeAnalysis.dir

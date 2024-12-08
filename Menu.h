@@ -5,10 +5,6 @@
 class Menu {
 public:
     void displayMenu();
-    //create new data analysis
-    //save current analysis
-    //load previous analysis
-    //exit program
 
 
 };

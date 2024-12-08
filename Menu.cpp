@@ -22,10 +22,7 @@ void Menu::displayMenu() {
             analysis.readTempFile("monthly-average-surface-temperatures-by-year.csv");
             //read in the co2 data
             analysis.readCO2File("co2_annmean_mlo.csv");
-            //run whatever analysis?  -- display it
-            //analysis.pearsonCorrelation();
             analysis.calculatePearsonCorrelation();
-            //mat plot lib to display it (or just graph() method)
             analysis.graph();
             displayMenu();
             break;
@@ -38,8 +35,9 @@ void Menu::displayMenu() {
             //read in the co2 data
             analysis.readCO2File("co2_annmean_mlo.csv");
             std::cout << "saving analsyis\n";
-            //output our analysis to some sort of save file
+            //output our analysis to the save file
             analysis.saveAnalysis("saveAnalysisFile.csv");
+            std::cout << "Data has been written to saveAnalysisFile.csv" << std::endl;
             displayMenu();
             break;
         }
@@ -48,7 +46,6 @@ void Menu::displayMenu() {
             Analysis analysis;
             std::cout << "loading previous analysis\n";
             analysis.loadAnalysis("saveAnalysisFile.csv");
-            //call sometihg to load the prev analysis and display visualization
             analysis.calculatePearsonCorrelation();
             analysis.graph();
             displayMenu();

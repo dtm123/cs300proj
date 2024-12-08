@@ -15,8 +15,6 @@ public:
     void readCO2File(const std::string& filename);
     int ppmCO2[64];
     double temp[64];
-    void pearsonCorrelation() {pearsonCorrelation(&ppmCO2[64], &temp[64], 64);}
-    double pearsonCorrelation(int y[], double x[], int size);  //const int ppmCO2[], const double temp[], int size = 64
     void calculatePearsonCorrelation();
     double calculatePearsonCorrelation(const std::vector<double>& x, const std::vector<double>& y);
     int graph();

@@ -75,76 +75,6 @@ void Analysis::readCO2File(const std::string& filename) {
 
 };
 
-// double Analysis::pearsonCorrelation(int y[64],double x[64], int size) {
-//     if (size != 64) {
-//         throw std::invalid_argument("Array size must be 64.");
-//     }
-//     // Initialize sums
-//     double sum_x = 0, sum_y = 0, sum_xx = 0, sum_yy = 0, sum_xy = 0;
-//
-//     // Calculate the necessary sums
-//     for (int i = 0; i < size; ++i) {
-//         sum_x += x[i] * 10000;
-//         sum_y += y[i];
-//         sum_xx += x[i] * x[i]*10000*10000;
-//         sum_yy += y[i] * y[i];
-//         sum_xy += x[i] * y[i]*10000;
-//     }
-//
-//     // Calculate the Pearson correlation coefficient using the formula
-//     double numerator = size * sum_xy - sum_x * sum_y;
-//     double denominator = std::sqrt((size * sum_xx - sum_x * sum_x) * (size * sum_yy - sum_y * sum_y));
-//
-//     if (denominator == 0) {
-//         std::cerr << "Denominator is zero, correlation coefficient cannot be computed!" << std::endl;
-//         return -1; // Error: division by zero
-//     }
-//
-//     // std::cout << sum_x << " " << sum_y << " " << sum_xx << " " << sum_xy << " " << sum_yy << std::endl;
-//     // std::cout << sqrt((size * sum_xx - sum_x * sum_x) * (size * sum_yy - sum_y * sum_y)) << std::endl;
-//     std::cout << x[0] << " " << y[0] << std::endl;
-//
-//     std::cout << "Numerator: " << numerator << " Denominator: " << denominator << std::endl;
-//
-//     if (denominator == 0) {
-//         throw std::runtime_error("Denominator is zero, correlation cannot be determined.");
-//
-//         // Return the Pearson correlation coefficient
-//
-//
-//     }
-//     return numerator / denominator;
-// }
-
-//     //size = 64;
-//     //ppmCO2 == x[];
-//     //temp == y[];
-//     double sum_x = 0.0, sum_y = 0.0, sum_xy = 0.0;
-//     double sum_x2 = 0.0, sum_y2 = 0.0;
-//
-//     for (int i = 0; i < size; i++) {
-//         sum_x += x[i];
-//         sum_y += y[i];
-//         sum_xy += x[i] * y[i];
-//         sum_x2 += x[i] * x[i];
-//         sum_y2 += y[i] * y[i];
-//
-//     }
-//     double numerator = size * sum_xy - sum_x * sum_y;
-//     double denominator = std::sqrt((size * sum_x2 - sum_x * sum_x) * (size * sum_y2 - sum_y * sum_y));
-//
-//     std::cout << sum_x << " " << sum_y << " " << sum_x2 << " " << sum_xy << " " << sum_y2 << std::endl;
-//     std::cout << sqrt((size * sum_x2 - sum_x * sum_x) * (size * sum_y2 - sum_y * sum_y)) << std::endl;
-//     std::cout << x[0] << " " << y[0] << std::endl;
-//
-//     std::cout << "Numerator: " << numerator << " Denominator: " << denominator << std::endl;
-//
-//     if (denominator == 0) {
-//         throw std::runtime_error("Denominator is zero, correlation cannot be determined.");
-//     }
-//
-//     return numerator / denominator;
-// }
 
 void Analysis::calculatePearsonCorrelation() {
     std::vector<double> tempVector;
@@ -180,13 +110,10 @@ double Analysis::calculatePearsonCorrelation(const std::vector<double>& x, const
     double numerator = n * sumXY - sumX * sumY;
     double denominator = std::sqrt((n * sumX2 - sumX * sumX) * (n * sumY2 - sumY * sumY));
 
-    std::cout << x[0] << " " << y[0] << std::endl;
     if (denominator == 0) {
         throw std::runtime_error("Denominator is zero, cannot calculate correlation.");
     }
-    std::cout << "Numerator: " << numerator << " Denominator: " << denominator << std::endl;
     coefficient = numerator / denominator;
-    std::cout << "Coefficient: " << coefficient << std::endl;
     return coefficient;
 }
 
@@ -202,11 +129,6 @@ int Analysis::graph() {
         std::cerr << "Python initialization failed!" << std::endl;
         return -1;
     }
-
-    // Import necessary Python modules (matplotlib.pyplot)
-    //PyObject* pName = PyUnicode_DecodeFSDefault("matplotlib.pyplot");
-    //PyObject* pModule = PyImport_Import(pName);
-    //Py_XDECREF(pName);  // Clean up reference to module name
 
     // NEW CODE Import necessary Python modules (matplotlib.pyplot, numpy)
     PyObject* pNameMatplotlib = PyUnicode_DecodeFSDefault("matplotlib.pyplot");
@@ -248,28 +170,17 @@ int Analysis::graph() {
             }
 
             // Pack the arguments into a tuple
-            //PyObject* pArgs = PyTuple_Pack(2, pX, pY);
             PyObject* pArgsPlot = PyTuple_Pack(2, pX, pY);
 
             // Call the plot function
-            //PyObject* pValue = PyObject_CallObject(pFuncPlot, pArgs);
             PyObject* pValuePlot = PyObject_CallObject(pFuncPlot, pArgsPlot);
-
-
-            // Clean up references
-            //Py_XDECREF(pArgs);
-            //Py_XDECREF(pX);
-            //Py_XDECREF(pY);
-            //Py_XDECREF(pValue);
 
             Py_XDECREF(pArgsPlot);
             Py_XDECREF(pValuePlot);
 
             PyObject* pFuncPolyfit = PyObject_GetAttrString(pModuleNumpy, "polyfit");
             PyObject* pFuncPolyval = PyObject_GetAttrString(pModuleNumpy, "polyval");
-            //} else {
-            //std::cerr << "Function 'plot' not found!" << std::endl;
-            // Fit a linear trendline (degree 1)
+
             if (pFuncPolyfit && pFuncPolyval) {
                 PyObject* pArgsPolyfit = PyTuple_Pack(3, pX, pY, PyLong_FromLong(1));
                 PyObject* pValuePolyfit = PyObject_CallObject(pFuncPolyfit, pArgsPolyfit);
@@ -280,12 +191,6 @@ int Analysis::graph() {
                     PyObject* pArgsPolyval = PyTuple_Pack(2, pValuePolyfit, pX);
                     PyObject* pValuePolyval = PyObject_CallObject(pFuncPolyval, pArgsPolyval);
                 }
-
-                // Show the plot
-                //PyObject* pFuncShow = PyObject_GetAttrString(pModule, "show");
-                //if (PyCallable_Check(pFuncShow)) {
-                //PyObject_CallObject(pFuncShow, NULL);
-                //}
 
                 // Evaluate the trendline values (y-values for the fitted model)
                 PyObject* pArgsPolyval = PyTuple_Pack(2, pValuePolyfit, pX);
@@ -300,11 +205,6 @@ int Analysis::graph() {
                 Py_XDECREF(pValuePolyval);
                 Py_XDECREF(pArgsTrendline);
                 Py_XDECREF(pValueTrendline);
-
-                // Clean up
-                //Py_XDECREF(pFuncShow);
-                //Py_XDECREF(pFuncPlot);
-                //Py_XDECREF(pModule);
 
                 // Add labels to the axes
                 if (pFuncXLabel && pFuncYLabel) {
@@ -357,14 +257,6 @@ int Analysis::graph() {
 
 int Analysis::saveAnalysis(const std::string& filename) {
 
-    // std::vector<double> x;
-    // std::vector<double> y;
-    // for (int i = 0; i < 64; i++) {
-    //     y.insert (y.begin(),temp[i]);
-    //     x.insert (x.begin(),ppmCO2[i]);
-    // }
-
-
     std::ofstream outputFile(filename);
 
     if (!outputFile) {
@@ -374,7 +266,7 @@ int Analysis::saveAnalysis(const std::string& filename) {
 
     // Write the header row to the CSV
     outputFile << "CO2 Concentration (ppm), Temperature (°C)" << std::endl;
-    std::cout << ppmCO2[0] << std::endl;
+
 
     // Write the data rows (pair each x and y)
     for (int i = 0; i < 64; ++i) {
@@ -385,7 +277,7 @@ int Analysis::saveAnalysis(const std::string& filename) {
     // Close the file
     outputFile.close();
 
-    std::cout << "Data has been written to saveAnalysisFile.csv" << std::endl;
+
     return 0;
 
 };
@@ -412,6 +304,5 @@ int Analysis::loadAnalysis(const std::string& filename) {
         temp[cnt] = std::stod(second);
         cnt++;
     }
-    std::cout << temp[0] <<std::endl;
     return 0;
 }

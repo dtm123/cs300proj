@@ -118,8 +118,7 @@ double Analysis::pearsonCorrelation(int y[64],double x[64], int size) {
 }
 
 
-//install koolplot https://www.koolplot.codecutter.org/
-//
+
 int Analysis::graph() {
   // Initialize the Python interpreter
     Py_Initialize();
@@ -140,8 +139,15 @@ int Analysis::graph() {
         PyObject* pFuncPlot = PyObject_GetAttrString(pModule, "plot");
         if (PyCallable_Check(pFuncPlot)) {
             // Prepare data for plotting (e.g., x and y values)
-            std::vector<double> x = {1.0, 2.0, 3.0, 4.0, 5.0};
-            std::vector<double> y = {1.0, 4.0, 9.0, 16.0, 25.0};
+            std::vector<double> x;
+            std::vector<double> y;
+            for (int i = 0; i < 64; i++) {
+               y.insert (y.begin(),temp[i]);
+                x.insert (x.begin(),ppmCO2[i]);
+            }
+
+
+
 
             // Create Python lists from C++ vectors
             PyObject* pX = PyList_New(x.size());

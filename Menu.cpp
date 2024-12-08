@@ -25,7 +25,7 @@ void Menu::displayMenu() {
             //run whatever analysis?  -- display it
             analysis.pearsonCorrelation();
             //mat plot lib to display it (or just graph() method)
-            // analysis.graph();
+            analysis.graph();
             displayMenu();
             break;
         }

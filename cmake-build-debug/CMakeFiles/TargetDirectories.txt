@@ -1,3 +1,3 @@
-D:/ClassWork/CS300/ClimateChangeAnalysis/cmake-build-debug/CMakeFiles/ClimateChangeAnalysis.dir
-D:/ClassWork/CS300/ClimateChangeAnalysis/cmake-build-debug/CMakeFiles/edit_cache.dir
-D:/ClassWork/CS300/ClimateChangeAnalysis/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/adamr/OneDrive/Documents/GitHub/cs300proj/cmake-build-debug/CMakeFiles/ClimateChangeAnalysis.dir
+C:/Users/adamr/OneDrive/Documents/GitHub/cs300proj/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/adamr/OneDrive/Documents/GitHub/cs300proj/cmake-build-debug/CMakeFiles/rebuild_cache.dir

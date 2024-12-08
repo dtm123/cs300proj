@@ -7,6 +7,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+// #include "matploglibcpp.h"
 
 class Analysis {
 public:
@@ -14,9 +15,9 @@ public:
     void readCO2File(const std::string& filename);
     int ppmCO2[64];
     double temp[64];
-    double pearsonCorrelation(const int ppmCO2[], const double temp[], int size = 64);
-
-
+    void pearsonCorrelation() {pearsonCorrelation(&ppmCO2[64], &temp[64], 64);}
+    double pearsonCorrelation(int y[], double x[], int size);  //const int ppmCO2[], const double temp[], int size = 64
+    int graph();
 
 private:
 

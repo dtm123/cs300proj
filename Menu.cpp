@@ -1,8 +1,7 @@
 #include "Menu.h"
-
+#include "Analysis.h"
 #include <iostream>
 
-#include "Analysis.h"
 
 void Menu::displayMenu() {
 
@@ -24,8 +23,9 @@ void Menu::displayMenu() {
             //read in the co2 data
             analysis.readCO2File("co2_annmean_mlo.csv");
             //run whatever analysis?  -- display it
-            //mat plot lib to display it
-
+            analysis.pearsonCorrelation();
+            //mat plot lib to display it (or just graph() method)
+            // analysis.graph();
             displayMenu();
             break;
         }

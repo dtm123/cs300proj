@@ -7,4 +7,5 @@ add_executable(ClimateChangeAnalysis main.cpp
         Menu.h
         Analysis.cpp
         Analysis.h
-        Menu.cpp)
+        Menu.cpp
+        graphics.h)

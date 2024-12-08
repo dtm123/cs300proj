@@ -29,7 +29,6 @@ void Analysis::readTempFile(const std::string& filename) {
     std::getline(infile, line);
     std::getline(infile, line);
     std::string values_str = line;
-    // std::cout << values_str << std::endl;
 
     std::stringstream ss(values_str);
     std::string item;
@@ -40,9 +39,6 @@ void Analysis::readTempFile(const std::string& filename) {
         cnt--;
     }
 
-    // for (int i = 0; i < 65; i++) {
-    //     std::cout << temp[i] << std::endl;
-    // }
 };
 
 void Analysis::readCO2File(const std::string& filename) {
@@ -77,45 +73,123 @@ void Analysis::readCO2File(const std::string& filename) {
         cnt++;
     }
 
-    // for (int i = 0; i < 65; i++) {
-    //     std::cout << ppmCO2[i] << std::endl;
-    // }
 };
 
-double Analysis::pearsonCorrelation(int y[64],double x[64], int size) {
+// double Analysis::pearsonCorrelation(int y[64],double x[64], int size) {
+//     if (size != 64) {
+//         throw std::invalid_argument("Array size must be 64.");
+//     }
+//     // Initialize sums
+//     double sum_x = 0, sum_y = 0, sum_xx = 0, sum_yy = 0, sum_xy = 0;
+//
+//     // Calculate the necessary sums
+//     for (int i = 0; i < size; ++i) {
+//         sum_x += x[i] * 10000;
+//         sum_y += y[i];
+//         sum_xx += x[i] * x[i]*10000*10000;
+//         sum_yy += y[i] * y[i];
+//         sum_xy += x[i] * y[i]*10000;
+//     }
+//
+//     // Calculate the Pearson correlation coefficient using the formula
+//     double numerator = size * sum_xy - sum_x * sum_y;
+//     double denominator = std::sqrt((size * sum_xx - sum_x * sum_x) * (size * sum_yy - sum_y * sum_y));
+//
+//     if (denominator == 0) {
+//         std::cerr << "Denominator is zero, correlation coefficient cannot be computed!" << std::endl;
+//         return -1; // Error: division by zero
+//     }
+//
+//     // std::cout << sum_x << " " << sum_y << " " << sum_xx << " " << sum_xy << " " << sum_yy << std::endl;
+//     // std::cout << sqrt((size * sum_xx - sum_x * sum_x) * (size * sum_yy - sum_y * sum_y)) << std::endl;
+//     std::cout << x[0] << " " << y[0] << std::endl;
+//
+//     std::cout << "Numerator: " << numerator << " Denominator: " << denominator << std::endl;
+//
+//     if (denominator == 0) {
+//         throw std::runtime_error("Denominator is zero, correlation cannot be determined.");
+//
+//         // Return the Pearson correlation coefficient
+//
+//
+//     }
+//     return numerator / denominator;
+// }
 
-    if (size <= 0) {
-        throw std::invalid_argument("Array size must be positive.");
+//     //size = 64;
+//     //ppmCO2 == x[];
+//     //temp == y[];
+//     double sum_x = 0.0, sum_y = 0.0, sum_xy = 0.0;
+//     double sum_x2 = 0.0, sum_y2 = 0.0;
+//
+//     for (int i = 0; i < size; i++) {
+//         sum_x += x[i];
+//         sum_y += y[i];
+//         sum_xy += x[i] * y[i];
+//         sum_x2 += x[i] * x[i];
+//         sum_y2 += y[i] * y[i];
+//
+//     }
+//     double numerator = size * sum_xy - sum_x * sum_y;
+//     double denominator = std::sqrt((size * sum_x2 - sum_x * sum_x) * (size * sum_y2 - sum_y * sum_y));
+//
+//     std::cout << sum_x << " " << sum_y << " " << sum_x2 << " " << sum_xy << " " << sum_y2 << std::endl;
+//     std::cout << sqrt((size * sum_x2 - sum_x * sum_x) * (size * sum_y2 - sum_y * sum_y)) << std::endl;
+//     std::cout << x[0] << " " << y[0] << std::endl;
+//
+//     std::cout << "Numerator: " << numerator << " Denominator: " << denominator << std::endl;
+//
+//     if (denominator == 0) {
+//         throw std::runtime_error("Denominator is zero, correlation cannot be determined.");
+//     }
+//
+//     return numerator / denominator;
+// }
+
+void Analysis::calculatePearsonCorrelation() {
+    std::vector<double> tempVector;
+    std::vector<double> co2Vector;
+    int i=0;
+    while (tempVector.size() < 64) {
+        tempVector.push_back(temp[i]);
+        co2Vector.push_back(ppmCO2[i]);
+        i++;
     }
-    //size = 64;
-    //ppmCO2 == x[];
-    //temp == y[];
-    double sum_x = 0.0, sum_y = 0.0, sum_xy = 0.0;
-    double sum_x2 = 0.0, sum_y2 = 0.0;
+    calculatePearsonCorrelation(tempVector, co2Vector);
 
-    for (int i = 0; i < size; i++) {
-        sum_x += x[i];
-        sum_y += y[i];
-        sum_xy += x[i] * y[i];
-        sum_x2 += x[i] * x[i];
-        sum_y2 += y[i] * y[i];
-
-    }
-    double numerator = size * sum_xy - sum_x * sum_y;
-    double denominator = std::sqrt((size * sum_x2 - sum_x * sum_x) * (size * sum_y2 - sum_y * sum_y));
-
-    std::cout << sum_x << " " << sum_y << " " << sum_x2 << " " << sum_xy << " " << sum_y2 << std::endl;
-    std::cout << sqrt((size * sum_x2 - sum_x * sum_x) * (size * sum_y2 - sum_y * sum_y)) << std::endl;
-    std::cout << x[0] << " " << y[0] << std::endl;
-
-    std::cout << "Numerator: " << numerator << " Denominator: " << denominator << std::endl;
-
-    if (denominator == 0) {
-        throw std::runtime_error("Denominator is zero, correlation cannot be determined.");
-    }
-
-    return numerator / denominator;
 }
+
+
+double Analysis::calculatePearsonCorrelation(const std::vector<double>& x, const std::vector<double>& y) {
+    if (x.size() != y.size() || x.size() == 0) {
+        throw std::invalid_argument("Vectors must be of the same size and non-empty.");
+    }
+
+    double sumX = 0, sumY = 0, sumXY = 0;
+    double sumX2 = 0, sumY2 = 0;
+    int n = x.size();
+
+    for (int i = 0; i < n; ++i) {
+        sumX += x[i];
+        sumY += y[i];
+        sumXY += x[i] * y[i];
+        sumX2 += x[i] * x[i];
+        sumY2 += y[i] * y[i];
+    }
+
+    double numerator = n * sumXY - sumX * sumY;
+    double denominator = std::sqrt((n * sumX2 - sumX * sumX) * (n * sumY2 - sumY * sumY));
+
+    std::cout << x[0] << " " << y[0] << std::endl;
+    if (denominator == 0) {
+        throw std::runtime_error("Denominator is zero, cannot calculate correlation.");
+    }
+    std::cout << "Numerator: " << numerator << " Denominator: " << denominator << std::endl;
+    coefficient = numerator / denominator;
+    std::cout << "Coefficient: " << coefficient << std::endl;
+    return coefficient;
+}
+
 
 
 
@@ -250,7 +324,8 @@ int Analysis::graph() {
                 // Add a title to the plot
                 if (pFuncTitle) {
                     // Set the title for the plot
-                    PyObject* pTitle = PyUnicode_FromString("Temperature Affected by CO2");
+                    std::string title="Temperature Affected by CO2 \n Coefficient: " + std::to_string(coefficient);
+                    PyObject* pTitle = PyUnicode_FromString(title.c_str());
                     PyObject_CallFunctionObjArgs(pFuncTitle, pTitle, NULL);
                     Py_XDECREF(pTitle);
                 }
@@ -303,8 +378,8 @@ int Analysis::saveAnalysis(const std::string& filename) {
 
     // Write the data rows (pair each x and y)
     for (int i = 0; i < 64; ++i) {
-        outputFile << ppmCO2[i] << ", " << temp[i] << std::endl;
-        //std::cout << ppmCO2[i] << ", " << temp[i] << std::endl;
+        outputFile << ppmCO2[i] << "," << temp[i] << std::endl;
+
     }
 
     // Close the file
@@ -314,3 +389,29 @@ int Analysis::saveAnalysis(const std::string& filename) {
     return 0;
 
 };
+
+int Analysis::loadAnalysis(const std::string& filename) {
+    std::ifstream infile(filename);
+    if (!infile.is_open()) {
+        std::cerr << "Error opening file " << filename << std::endl;
+        exit(1);
+    }
+
+    int cnt = 0;
+
+
+    std::string line;
+    std::getline(infile, line);
+    while (std::getline(infile, line)) {
+        std::stringstream ss(line);
+        std::string first, second;
+
+        std::getline(ss, first, ',');
+        std::getline(ss, second, ',');
+        ppmCO2[cnt] = std::stoi(first);
+        temp[cnt] = std::stod(second);
+        cnt++;
+    }
+    std::cout << temp[0] <<std::endl;
+    return 0;
+}

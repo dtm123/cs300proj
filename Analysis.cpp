@@ -120,7 +120,7 @@ double Analysis::pearsonCorrelation(int y[64],double x[64], int size) {
 
 
 int Analysis::graph() {
-  // Initialize the Python interpreter
+    // Initialize the Python interpreter
     Py_Initialize();
 
     // Check if Python was initialized successfully
@@ -130,19 +130,35 @@ int Analysis::graph() {
     }
 
     // Import necessary Python modules (matplotlib.pyplot)
-    PyObject* pName = PyUnicode_DecodeFSDefault("matplotlib.pyplot");
-    PyObject* pModule = PyImport_Import(pName);
-    Py_XDECREF(pName);  // Clean up reference to module name
+    //PyObject* pName = PyUnicode_DecodeFSDefault("matplotlib.pyplot");
+    //PyObject* pModule = PyImport_Import(pName);
+    //Py_XDECREF(pName);  // Clean up reference to module name
 
-    if (pModule != NULL) {
+    // NEW CODE Import necessary Python modules (matplotlib.pyplot, numpy)
+    PyObject* pNameMatplotlib = PyUnicode_DecodeFSDefault("matplotlib.pyplot");
+    PyObject* pModuleMatplotlib = PyImport_Import(pNameMatplotlib);
+    Py_XDECREF(pNameMatplotlib);  // Clean up reference to module name
+
+    // NEW CODE
+    PyObject* pNameNumpy = PyUnicode_DecodeFSDefault("numpy");
+    PyObject* pModuleNumpy = PyImport_Import(pNameNumpy);
+    Py_XDECREF(pNameNumpy);
+
+    if (pModuleMatplotlib != NULL && pModuleNumpy != NULL) {
         // Retrieve the 'plot' function from matplotlib.pyplot
-        PyObject* pFuncPlot = PyObject_GetAttrString(pModule, "plot");
+        //PyObject* pFuncPlot = PyObject_GetAttrString(pModule, "plot");
+        PyObject* pFuncPlot = PyObject_GetAttrString(pModuleMatplotlib, "plot");
+        PyObject* pFuncShow = PyObject_GetAttrString(pModuleMatplotlib, "show");
+        PyObject* pFuncXLabel = PyObject_GetAttrString(pModuleMatplotlib, "xlabel");
+        PyObject* pFuncYLabel = PyObject_GetAttrString(pModuleMatplotlib, "ylabel");
+        PyObject* pFuncTitle = PyObject_GetAttrString(pModuleMatplotlib, "title");
+
         if (PyCallable_Check(pFuncPlot)) {
             // Prepare data for plotting (e.g., x and y values)
             std::vector<double> x;
             std::vector<double> y;
             for (int i = 0; i < 64; i++) {
-               y.insert (y.begin(),temp[i]);
+                y.insert (y.begin(),temp[i]);
                 x.insert (x.begin(),ppmCO2[i]);
             }
 
@@ -158,35 +174,143 @@ int Analysis::graph() {
             }
 
             // Pack the arguments into a tuple
-            PyObject* pArgs = PyTuple_Pack(2, pX, pY);
+            //PyObject* pArgs = PyTuple_Pack(2, pX, pY);
+            PyObject* pArgsPlot = PyTuple_Pack(2, pX, pY);
 
             // Call the plot function
-            PyObject* pValue = PyObject_CallObject(pFuncPlot, pArgs);
+            //PyObject* pValue = PyObject_CallObject(pFuncPlot, pArgs);
+            PyObject* pValuePlot = PyObject_CallObject(pFuncPlot, pArgsPlot);
+
 
             // Clean up references
-            Py_XDECREF(pArgs);
-            Py_XDECREF(pX);
-            Py_XDECREF(pY);
-            Py_XDECREF(pValue);
-        } else {
-            std::cerr << "Function 'plot' not found!" << std::endl;
-        }
+            //Py_XDECREF(pArgs);
+            //Py_XDECREF(pX);
+            //Py_XDECREF(pY);
+            //Py_XDECREF(pValue);
 
-        // Show the plot
-        PyObject* pFuncShow = PyObject_GetAttrString(pModule, "show");
-        if (PyCallable_Check(pFuncShow)) {
-            PyObject_CallObject(pFuncShow, NULL);
-        }
+            Py_XDECREF(pArgsPlot);
+            Py_XDECREF(pValuePlot);
 
-        // Clean up
-        Py_XDECREF(pFuncShow);
-        Py_XDECREF(pFuncPlot);
-        Py_XDECREF(pModule);
-    } else {
-        std::cerr << "Failed to load matplotlib.pyplot!" << std::endl;
+            PyObject* pFuncPolyfit = PyObject_GetAttrString(pModuleNumpy, "polyfit");
+            PyObject* pFuncPolyval = PyObject_GetAttrString(pModuleNumpy, "polyval");
+            //} else {
+            //std::cerr << "Function 'plot' not found!" << std::endl;
+            // Fit a linear trendline (degree 1)
+            if (pFuncPolyfit && pFuncPolyval) {
+                PyObject* pArgsPolyfit = PyTuple_Pack(3, pX, pY, PyLong_FromLong(1));
+                PyObject* pValuePolyfit = PyObject_CallObject(pFuncPolyfit, pArgsPolyfit);
+                Py_XDECREF(pArgsPolyfit);
+
+                if (pValuePolyfit) {
+                    // Evaluate the trendline values (y-values for the fitted model)
+                    PyObject* pArgsPolyval = PyTuple_Pack(2, pValuePolyfit, pX);
+                    PyObject* pValuePolyval = PyObject_CallObject(pFuncPolyval, pArgsPolyval);
+                }
+
+                // Show the plot
+                //PyObject* pFuncShow = PyObject_GetAttrString(pModule, "show");
+                //if (PyCallable_Check(pFuncShow)) {
+                //PyObject_CallObject(pFuncShow, NULL);
+                //}
+
+                // Evaluate the trendline values (y-values for the fitted model)
+                PyObject* pArgsPolyval = PyTuple_Pack(2, pValuePolyfit, pX);
+                PyObject* pValuePolyval = PyObject_CallObject(pFuncPolyval, pArgsPolyval);
+
+                // Plot the trendline (using the x-values and the fitted y-values)
+                PyObject* pArgsTrendline = PyTuple_Pack(2, pX, pValuePolyval);
+                PyObject* pValueTrendline = PyObject_CallObject(pFuncPlot, pArgsTrendline);
+                Py_XDECREF(pArgsPolyfit);
+                Py_XDECREF(pValuePolyfit);
+                Py_XDECREF(pArgsPolyval);
+                Py_XDECREF(pValuePolyval);
+                Py_XDECREF(pArgsTrendline);
+                Py_XDECREF(pValueTrendline);
+
+                // Clean up
+                //Py_XDECREF(pFuncShow);
+                //Py_XDECREF(pFuncPlot);
+                //Py_XDECREF(pModule);
+
+                // Add labels to the axes
+                if (pFuncXLabel && pFuncYLabel) {
+                    // Set the x and y axis labels
+                    PyObject* pXLabel = PyUnicode_FromString("CO2 Concentration (ppm)");
+                    PyObject* pYLabel = PyUnicode_FromString("Temperature (°C)");
+
+                    // Call xlabel and ylabel functions
+                    PyObject_CallFunctionObjArgs(pFuncXLabel, pXLabel, NULL);
+                    PyObject_CallFunctionObjArgs(pFuncYLabel, pYLabel, NULL);
+
+                    // Clean up references to the labels
+                    Py_XDECREF(pXLabel);
+                    Py_XDECREF(pYLabel);
+                }
+
+                // Add a title to the plot
+                if (pFuncTitle) {
+                    // Set the title for the plot
+                    PyObject* pTitle = PyUnicode_FromString("Temperature Affected by CO2");
+                    PyObject_CallFunctionObjArgs(pFuncTitle, pTitle, NULL);
+                    Py_XDECREF(pTitle);
+                }
+
+
+                // Show the plot
+                if (PyCallable_Check(pFuncShow)) {
+                    PyObject_CallObject(pFuncShow, NULL);
+                }
+
+                // Clean up references
+                Py_XDECREF(pFuncShow);
+                Py_XDECREF(pFuncPlot);
+                Py_XDECREF(pFuncPolyfit);
+                Py_XDECREF(pFuncPolyval);
+                Py_XDECREF(pModuleMatplotlib);
+                Py_XDECREF(pModuleNumpy);
+            } else {
+                std::cerr << "Failed to load matplotlib.pyplot!" << std::endl;
+            }
+
+            // Finalize the Python interpreter
+            Py_Finalize();
+            return 0;
+        }
     }
-
-    // Finalize the Python interpreter
-    Py_Finalize();
     return 0;
 }
+
+int Analysis::saveAnalysis(const std::string& filename) {
+
+    // std::vector<double> x;
+    // std::vector<double> y;
+    // for (int i = 0; i < 64; i++) {
+    //     y.insert (y.begin(),temp[i]);
+    //     x.insert (x.begin(),ppmCO2[i]);
+    // }
+
+
+    std::ofstream outputFile(filename);
+
+    if (!outputFile) {
+        std::cerr << "Error opening file!" << std::endl;
+        return 1;
+    }
+
+    // Write the header row to the CSV
+    outputFile << "CO2 Concentration (ppm), Temperature (°C)" << std::endl;
+    std::cout << ppmCO2[0] << std::endl;
+
+    // Write the data rows (pair each x and y)
+    for (int i = 0; i < 64; ++i) {
+        outputFile << ppmCO2[i] << ", " << temp[i] << std::endl;
+        //std::cout << ppmCO2[i] << ", " << temp[i] << std::endl;
+    }
+
+    // Close the file
+    outputFile.close();
+
+    std::cout << "Data has been written to saveAnalysisFile.csv" << std::endl;
+    return 0;
+
+};

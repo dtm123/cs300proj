@@ -32,7 +32,9 @@ void Menu::displayMenu() {
 
         case 2: {
             std::cout << "saving analsyis\n";
+            Analysis analysis;
             //output our analysis to some sort of save file
+            analysis.saveAnalysis("saveAnalysisFile.csv");
             displayMenu();
             break;
         }
